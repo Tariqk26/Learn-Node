@@ -4,6 +4,7 @@ const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
 const { resize } = require('jimp');
+const { restart } = require('nodemon');
 
 const multerOptions = {
     storage: multer.memoryStorage(),
@@ -84,3 +85,9 @@ exports.getStoreBySlug = async (req, res, next) => {
     res.render('store', { store, title: store.name });
 
 };
+
+exports.getStoresByTag = async (req, res) => {
+    const tags = await Store.getTagsList();
+    const tag = req.params.tag;
+    res.render('tag', { tags, title: 'Tags', tag });
+}
